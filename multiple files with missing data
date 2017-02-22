@@ -1,0 +1,9 @@
+set concat='';
+for Each file in FileList('$(ibasefiles)')
+  EMPLOYEES:
+  $(concat)
+  Load   *,   
+  '$(file)' as filename
+  from [$(file)](qvd);
+  set concat=' concatenate (EMPLOYEES) ';
+NEXT;
