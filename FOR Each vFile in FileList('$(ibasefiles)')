@@ -1,0 +1,6 @@
+
+
+FOR Each vFile in FileList('$(ibasefiles)')
+	LOAD '$(vFile)' as fileListNames
+	AutoGenerate(1);
+NEXT vFile
