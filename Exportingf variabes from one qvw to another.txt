@@ -1,0 +1,11 @@
+Expressions:
+LOAD Variable, 
+     Expression
+FROM
+[Z:\QVProcessing\myPractice\1_QVD\My Prac Variables ( DO NOT DELETE).xls]
+(biff, embedded labels, table is Sheet1$);
+Let vNumberOfRows = NoOfRows('Expressions');
+For vI = 0 to (vNumberOfRows - 1)
+Let vVariable_Name = Peek('Variable',vI,'Expression');
+Let [$(vVariable_Name)] = Peek('Expression',vI,'Expression');
+Next
