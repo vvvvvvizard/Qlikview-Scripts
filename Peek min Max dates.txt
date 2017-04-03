@@ -1,0 +1,8 @@
+minmax:
+LOAD
+  min(Date) as MinDate,
+   max(Date) as MaxDate
+RESIDENT mytable;
+LET vMinDate = peek('MinDate');
+LET vMaxDate = peek('MaxDate);
+DROP TABLE minmax;
