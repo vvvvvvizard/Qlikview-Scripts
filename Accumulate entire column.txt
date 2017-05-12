@@ -1,0 +1,6 @@
+RangeSum(Above(Sum({$<my_product_status={'-1'},Product_Date={">=$(yProduct_Date_Min_Format)<=$(yProduct_Date_Max_Format)"}>}my_icomply_complete),0,RowNo())) /
+(
+RangeSum(Above(Sum({$<my_product_status={'-1'},Product_Date={">=$(yProduct_Date_Min_Format)<=$(yProduct_Date_Max_Format)"}>}my_icomply_incomplete),0,RowNo()))+
+RangeSum(Above(Sum({$<my_product_status={'-1'},Product_Date={">=$(yProduct_Date_Min_Format)<=$(yProduct_Date_Max_Format)"}>}my_icomply_complete),0,RowNo()))+
+RangeSum(Above(Sum({$<my_product_status={'-1'},Product_Date={">=$(yProduct_Date_Min_Format)<=$(yProduct_Date_Max_Format)"}>}my_icomply_none),0,RowNo()))
+)

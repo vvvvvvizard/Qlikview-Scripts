@@ -1,0 +1,94 @@
+//Overall Directory
+Set zDir = 'C:\Users\8707255029086\Desktop\Sales Analysis\';
+
+//Number of Fields not to include in the cross table -  There is no 'real' cross table load but the same logic applies
+Set zQualifyFields = 3; 
+
+//This is just for the 1st field detail load not to join - but after coloumb 1 has been loaded - this should join.
+Set zJoinTables = '';
+
+//This is to make the script dynamic and not hardcode the number of coloumbs (CrossTable) In this file - The number of years as well as months in the file
+
+NoOfFields:
+LOAD *
+FROM
+[$(zDir)Estimates.xls]
+(biff, no labels, table is Sheet1$);
+
+Let zNoOfFields = NoOfFields('NoOfFields')-$(zQualifyFields);
+
+Drop Table NoOfFields; 
+
+MainData:
+LOAD @1 as Customer, 
+     @2 as [Market Sub Segment], 
+     @3 as [Estimate Version],
+     RowNo() as RecordID
+FROM
+[$(zDir)Estimates.xls]
+(biff, no labels, table is Sheet1$);
+
+//Retrieving the field information using the dynamic way (NoOfFields) 'Cross table data'
+
+For i = 1 to $(zNoOfFields) 
+
+	Let zFieldNumber = $(i) + $(zQualifyFields);
+	
+	FieldData:
+	LOAD RowNo() as RecordID,
+		 @$(zFieldNumber)
+	FROM
+	[$(zDir)Estimates.xls]
+	(biff, no labels, table is Sheet1$);
+	
+	Let zYear = Peek('@$(zFieldNumber)', 0, 'FieldData');
+	Let zMonth = Peek('@$(zFieldNumber)', 1, 'FieldData');
+	Let zFieldName = Peek('@$(zFieldNumber)', 2, 'FieldData');
+	
+	FinalDetail:
+	$(zJoinTables)
+	Load  RecordID, 
+		  @$(zFieldNumber) as $(zFieldName),
+		  '$(zYear)' as Year,
+		  '$(zMonth)' as Month
+	Resident FieldData;
+	
+	Drop Table FieldData; 
+	
+	Set zJoinTables = 'Join (FinalDetail) ';
+	
+Next i; 
+
+//Removing Header information
+
+RemoveData:
+LOAD RowNo() as RemoveRows
+FROM
+[$(zDir)Estimates.xls]
+(biff, no labels, table is Sheet1$)
+where Isnull(@1);
+
+Let zRemoveRows = Peek('RemoveRows', -1, 'RemoveData') + 1; 
+
+Drop Table RemoveData; 
+
+//Cleanup - Getting Everything into one table (As per the requirement)
+
+FinalData:
+QUALIFY * ;
+NoConcatenate Load *
+Resident MainData
+Where RecordID > '$(zRemoveRows)'; 
+
+Left Join (FinalData) 
+Load * 
+Resident FinalDetail; 
+
+Drop Tables MainData, FinalDetail; 
+UNQUALIFY *;
+
+Estimates:
+LOAD *,
+FinalData.Customer& [FinalDetail-1.Month] &[FinalDetail-1.Year] as Unique_code
+Resident FinalData;
+DROP Table FinalData;
