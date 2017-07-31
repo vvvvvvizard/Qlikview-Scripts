@@ -1,0 +1,23 @@
+set Concatenate=;						// used to insert concatenate in load statement after the first file loaded
+
+//	subroutine
+sub ScanFolder(Root)
+	for each Ext in 'DocumentLog.txt'	//	use this to identify file names to load
+	//for each Ext in 'txt'				//	or simply indicate an extension types to load
+		for each FoundFile in filelist(Root & '\*' & Ext)
+			FileList: 					//	don't worry about the squigly lines.  they are there because of the concatenate variable.  will run fine.
+			$(Concatenate)
+			load * 
+			from [$(FoundFile)](txt, utf8, no labels, delimiter is '\t', msq, no eof);	//	parameters here might change depending on the files you are loading
+			
+		set Concatenate = concatenate;
+		next FoundFile
+	next Ext
+
+	for each SubDirectory in dirlist(Root&'\*')
+		call ScanFolder(SubDirectory)
+	next SubDirectory
+end Sub
+
+//	place the root directory you want to cycle through here.
+Call ScanFolder('C:\QlikView Application Folders\DistributionService\1\Log');
