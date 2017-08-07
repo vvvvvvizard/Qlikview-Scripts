@@ -1,0 +1,47 @@
+
+
+Set vQVDPath = 'QVD\'; 
+
+TableExceptionList:
+Load
+Concat(chr(39)&ExceptionList&chr(39),',') as ExceptionList;
+Load * Inline
+[
+ExceptionList
+TableExceptionList
+TableDetails
+T1
+];
+
+Let vExceptionList = Peek('ExceptionList',0,'TableExceptionList');
+
+// No of Table in Applications
+Let vNoOfTables = NoOfTables();
+Trace $(vNoOfTables);
+
+//Removal of Table
+Let i = $(vNoOfTables);
+do while i > 0
+	Let i = $(i)  - 1 ;
+	Let vTableName = TableName($(i));
+	
+	//Check in Exception List
+	vtableException = WildMatch('$(vTableName)',$(vExceptionList));
+	if $(vtableException) = 0 then
+		//Make Entry of Store/Dropped Table
+			TableDetails:
+			Load '$(i)' as TableId, '$(vTableName)' as Table autogenerate 1;			
+	
+		//Storing a table into QVD	
+			Store $(vTableName) into $(vQVDPath)\$(vTableName).qvd(qvd);
+		//Dropping a table
+			Drop table $(vTableName); 	
+		
+		Trace Stored & Dropped Table $(vTableName);
+	ENDIF	
+loop;
+ //Variable Cleanup
+i = NULL();
+vNoOfTables = NULL();
+vExceptionList = NULL();
+vTableName = NULL(); 
