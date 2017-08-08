@@ -1,0 +1,8 @@
+let vMaxDate  = '=max(Date)';
+let vMaxDay   = '=day(max(Date))';
+let vMaxMonth  = '=month(max(Date))';
+let vMaxYear  = '=max(Year)';
+let vPriorMonth  = '=month(addmonths(max(Date),-1))';
+let vPriorMonthYear = '=Year(addmonths(max(Date),-1))';
+let vPriorYear  = '=vMaxYear-1';
+let vPriorYearDate = '=date(addyears(max(Date),-1),' & chr(39) & 'DD MMM YYYY' & chr(39) & ')';
