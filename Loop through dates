@@ -1,0 +1,4 @@
+LOAD Process,   
+'Row '&RowNo() as Row,    
+date(MIN_DATE+IterNo()-1,'DD MMM YYYY') as DateResident Data
+While MIN_DATE+IterNo()-1<=MAX_DATE; DROP Table Data;
