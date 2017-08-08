@@ -7,5 +7,13 @@ let vPriorMonthYear = '=Year(addmonths(max(Date),-1))';
 let vPriorYear  = '=vMaxYear-1';
 let vPriorYearDate = '=date(addyears(max(Date),-1),' & chr(39) & 'DD MMM YYYY' & chr(39) & ')';
 
-Last 5 Years SalesSum({<Year=, Quarter=, Month=, Week=, Date={‘>=$(=YearStart(Max(Date), -4))<=$(=Date(Max(Date)))’}>} Sales ) Last 6 Quarters SalesSum({<Year=, Quarter=, Month=, Week=, Date={‘>=$(=QuarterStart(Max(Date), -5))<=$(=Date(Max(Date)))’}>} Sales ) Last 12 Months SalesSum({<Year=, Quarter=, Month=, Week=, Date={‘>=$(=MonthStart(Max(Date), -11))<=$(=Date(Max(Date)))’}>} Sales ) Last 15 Weeks SalesSum({<Year=, Quarter=, Month=, Week=, Date={‘>=$(=WeekStart(Max(Date), -14))<=$(=Date(Max(Date)))’}>} Sales ) Last 10 Days SalesSum({<Year=, Quarter=, Month=, Week=, Date={‘>=$(=Date(Max(Date)-9))<=$(=Date(Max(Date)))’}>} Sales ) Note:YTD - Year to DateQTD - Quarter to DateMTD - Month to DateWTD - Week to Date      Last YTD for the period selectedSum({<Year=, Quarter=, Month=, Week=, Date={‘>=$(=YearStart(Max(Date), -1))<=$(=AddYears(Max(Date), -1))’}>} Sales)Last QTD for the period selectedSum({<Year=, Quarter=, Month=, Week=, Date={‘>=$(=QuarterStart(Max(Date), -1))<=$(=AddMonths(Max(Date), -3))’}>} Sales) Last MTD for the period selectedSum({<Year=, Quarter=, Month=, Week=, Date={‘>=$(=MonthStart(Max(Date), -1))<=$(=AddMonths(Max(Date), -1))’}>} Sales) Last WTD for the period selectedSum({<Year=, Quarter=, Month=, Week=, Date={‘>=$(=WeekStart(Max(Date), -1))<=$(=Date(Max(Date) -7))’}>} Sales)
+Last 5 Years SalesSum({<Year=, Quarter=, Month=, Week=, Date={‘>=$(=YearStart(Max(Date), -4))<=$(=Date(Max(Date)))’}>} Sales )
+Last 6 Quarters SalesSum({<Year=, Quarter=, Month=, Week=, Date={‘>=$(=QuarterStart(Max(Date), -5))<=$(=Date(Max(Date)))’}>} Sales )
+Last 12 Months SalesSum({<Year=, Quarter=, Month=, Week=, Date={‘>=$(=MonthStart(Max(Date), -11))<=$(=Date(Max(Date)))’}>} Sales ) 
+Last 15 Weeks SalesSum({<Year=, Quarter=, Month=, Week=, Date={‘>=$(=WeekStart(Max(Date), -14))<=$(=Date(Max(Date)))’}>} Sales )
+Last 10 Days SalesSum({<Year=, Quarter=, Month=, Week=, Date={‘>=$(=Date(Max(Date)-9))<=$(=Date(Max(Date)))’}>} Sales ) 
+    Las Last YTD for the period selectedSum({<Year=, Quarter=, Month=, Week=, Date={‘>=$(=YearStart(Max(Date), -1))<=$(=AddYears(Max(Date), -1))’}>} Sales)
+    Last QTD for the period selectedSum({<Year=, Quarter=, Month=, Week=, Date={‘>=$(=QuarterStart(Max(Date), -1))<=$(=AddMonths(Max(Date), -3))’}>} Sales) 
+    Last MTD for the period selectedSum({<Year=, Quarter=, Month=, Week=, Date={‘>=$(=MonthStart(Max(Date), -1))<=$(=AddMonths(Max(Date), -1))’}>} Sales) 
+    Last WTD for the period selectedSum({<Year=, Quarter=, Month=, Week=, Date={‘>=$(=WeekStart(Max(Date), -1))<=$(=Date(Max(Date) -7))’}>} Sales)
 
