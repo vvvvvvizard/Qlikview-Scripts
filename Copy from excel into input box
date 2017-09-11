@@ -1,0 +1,4 @@
+='(' & Replace(Replace(Replace(Trim('$(TAK_LOOKUP)'), '  ', '|'),' ', '|'), chr(10), '|') & ')' 
+
+//Create a varaible TAK_LOOKUP='';
+//use a trigger to set field to 
