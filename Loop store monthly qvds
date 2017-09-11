@@ -1,0 +1,3 @@
+
+Month:
+Load Distinct Month(Date) as MONTH From XYZ; Let vCount = noofrows('Month'); For i=0 to $(vCount) -1      Let vMonth = peek('MONTH',$(i),'Month');      $(vMonth):     Load * from XYZ where Month(Date) = $(vMonth);      Store $(vMonth) into $(vMonth).qvd;      Drop Table $(vMonth); Next
