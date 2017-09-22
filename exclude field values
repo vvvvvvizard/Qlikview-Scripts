@@ -1,0 +1,3 @@
+set EXLUDED_TAKKODE= 'HG','EW','EF','DS','DW','VJ','GO','VP','VQ' ,'22','ET','FG','VM','39','VR' ,'VS','VW' ,'VU','VO','GW','HQ' ,'VA' ,'VI' ,'23' ,'EO' ,'6' ; 
+
+ if(match(upper(@1),$(EXLUDED_TAKKODE))>0,upper(@1)) AS [TAKKODE], 
