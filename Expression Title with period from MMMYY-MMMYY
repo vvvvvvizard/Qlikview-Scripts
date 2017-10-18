@@ -1,0 +1,2 @@
+//this is for last year - current month 12 months rolling average title
+=Date(AddMonths(Date#(Month(Today())&Year(Today()),'MMMYY'),-13),'MMMYY')& '-'&Date(AddMonths(Date#(Month(Today())&Year(Today()),'MMMYY'),-1),'MMMYY') 
