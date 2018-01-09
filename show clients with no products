@@ -1,0 +1,62 @@
+Table:
+
+LOAD * INLINE [
+
+    customer, product
+
+    100, 2
+
+    101, 1
+
+    100, 1
+
+    103, 3
+
+];
+
+
+
+
+Temp:
+
+LOAD Distinct customer
+
+Resident Table;
+
+
+
+
+Left Join (Temp)
+
+LOAD Distinct product
+
+Resident Table;
+
+
+
+
+Left Join (Temp)
+
+LOAD *,
+
+ 1 as Flag
+
+Resident Table;
+EXIT Script;
+
+
+
+FinalTable:
+
+LOAD product,
+
+ If(Flag = 1, customer) as customer,
+
+ If(Len(Trim(Flag)) = 0, customer) as not_customer
+
+Resident Temp;
+
+
+
+
+DROP Table Table, Temp; 
