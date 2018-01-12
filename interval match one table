@@ -1,0 +1,56 @@
+SET ThousandSep=' ';
+SET DecimalSep=',';
+SET MoneyThousandSep=' ';
+SET MoneyDecimalSep=',';
+SET MoneyFormat='R# ##0,00;-R# ##0,00';
+SET TimeFormat='h:mm:ss TT';
+SET DateFormat='YYYY/MM/DD';
+SET TimestampFormat='YYYY/MM/DD h:mm:ss[.fff] TT';
+SET FirstWeekDay=6;
+SET BrokenWeeks=1;
+SET ReferenceDay=0;
+SET FirstMonthOfYear=1;
+SET CollationLocale='en-ZA';
+SET MonthNames='Jan;Feb;Mar;Apr;May;Jun;Jul;Aug;Sep;Oct;Nov;Dec';
+SET LongMonthNames='January;February;March;April;May;June;July;August;September;October;November;December';
+SET DayNames='Mon;Tue;Wed;Thu;Fri;Sat;Sun';
+SET LongDayNames='Monday;Tuesday;Wednesday;Thursday;Friday;Saturday;Sunday';
+
+StudentMarks:   
+LOAD * Inline   
+[   
+Min_Marks, Max_Marks, Result   
+10, 30, Fail   
+35, 40, Pass   
+45,60, Average   
+75,80, Honour   
+];   
+
+StudentDetail:   
+LOAD * Inline   [   
+Marks, StudentName   
+30, Ram   
+40, Shyam   
+60, Mohan   
+80, Mahesh   
+];   
+
+//IntervalMatch_Table:   
+join ('StudentMarks')
+IntervalMatch(Marks)   
+LOAD Min_Marks, Max_Marks   
+resident StudentMarks; 
+
+Final:
+NoConcatenate
+LOAD * 
+Resident StudentMarks;
+join
+LOAD *
+Resident StudentDetail;
+
+DROP Tables StudentMarks,StudentDetail;
+
+
+
+ 
