@@ -1,0 +1,16 @@
+SET vFinYear_Month=10;
+
+CALENDAR:
+LOAD [GOB DATUM],
+Year([GOB DATUM]) AS Year , 
+Month([GOB DATUM]) as Month,
+Week([GOB DATUM]) as Week, 
+Day([GOB DATUM]) as Day, 
+if(Month([GOB DATUM])>9,Year([GOB DATUM])+1 ,Year([GOB DATUM])) as Fin_Year,
+If(Num(Month([GOB DATUM]))>=10 AND Num(Month([GOB DATUM]))<=12,(Num(Month([GOB DATUM]))-9),(Num(Month([GOB DATUM]))+3)) AS FIN_MonthNumber ,
+if(InYearToDate([GOB DATUM],MonthEnd( AddMonths(today(),-1)),0,$(vFinYear_Month)),1,0) as FYTD,
+if(InMonthToDate([GOB DATUM],MonthEnd( AddMonths(today(),-1)),0,$(vFinYear_Month)),1,0) as MTD,
+if(InYearToDate([GOB DATUM],MonthEnd( AddMonths(today(),-13)),0,$(vFinYear_Month)),1,0) as PFYTD,
+if(InMonthToDate([GOB DATUM],MonthEnd( AddMonths(today(),-13)),0,$(vFinYear_Month)),1,0) as PMTD,
+if(InQuarterToDate([GOB DATUM],MonthEnd( AddMonths(today(),-1)),0,$(vFinYear_Month)),1,0) as FQTD,
+if(InQuarterToDate([GOB DATUM],MonthEnd( AddMonths(today(),-13)),0,$(vFinYear_Month)),1,0) as PY_FQTD 
