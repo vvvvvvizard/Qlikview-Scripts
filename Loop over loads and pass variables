@@ -1,0 +1,33 @@
+Company_ID_Values:
+Load * Inline [ 
+CompanyID 
+KPI|3
+Iritron|59
+];
+
+
+	For each test in FieldValueList('CompanyID')
+
+      A:
+      Load Company Inline [
+      Company
+      KPI
+      Iritron
+      ]
+      Where Company=SubField('$(test)','|',1);
+
+
+
+
+      B:
+      Load ID Inline [
+      ID
+      3
+      59
+      ]
+      Where ID=SubField('$(test)','|',2);
+  
+
+Next test
+drop Table Company_ID_Values;
+Exit Script;
