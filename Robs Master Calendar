@@ -1,0 +1,23 @@
+MasterCalendar: 
+Load 
+ TempDate AS OrderDate, 
+ week(TempDate) As Week, 
+ Year(TempDate) As Year, 
+ Month(TempDate) As Month, 
+ Day(TempDate) As Day, 
+ 'Q' & ceil(month(TempDate) / 3) AS Quarter, 
+ Week(weekstart(TempDate)) & '-' & WeekYear(TempDate) as WeekYear, 
+ WeekDay(TempDate) as WeekDay 
+;
+
+//=== Generate a temp table of dates === 
+LOAD 
+ date(mindate + IterNo()) AS TempDate
+ ,maxdate // Used in InYearToDate() above, but not kept 
+WHILE mindate + IterNo() <= maxdate;
+
+//=== Get min/max dates from Field ===/
+LOAD
+ min(FieldValue('OrderDate', recno()))-1 as mindate,
+ max(FieldValue('OrderDate', recno())) as maxdate
+AUTOGENERATE FieldValueCount('OrderDate');
