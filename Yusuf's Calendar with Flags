@@ -1,0 +1,54 @@
+Sample_Date:
+LOAD * inline [
+OrderDate 
+2013/01/01,
+2018/07/10
+];
+
+SET vFinYear_Month=10;
+
+MasterCalendar: 
+LOAD * , 
+'FQ' & Ceil(FiscalMonth/3) as FQuarter;
+Load 
+ TempDate AS OrderDate, 
+ week(TempDate) As Week, 
+ Year(TempDate) As Year, 
+ Month(TempDate) As Month, 
+ Date(Date#(Year(TempDate)*100+Month(TempDate),'YYYYMM'),'MMM-YY') as Month_Year,
+ Day(TempDate) As Day, 
+ 'Q' & ceil(month(TempDate) / 3) AS Quarter, 
+ Week(weekstart(TempDate)) & '-' & WeekYear(TempDate) as WeekYear, 
+ WeekDay(TempDate) as WeekDay ,
+ //////Fiscal Periods
+  YearName(TempDate, 0, $(vFinYear_Month)) AS FiscalYear,
+Mod(Month(TempDate) - $(vFinYear_Month), 12)+1 AS FiscalMonth,
+ ///////Flags normal calendar
+ if(InMonthToDate(TempDate,today(),0),1,0) as MTD,
+  if(InMonthToDate(TempDate,AddYears(today(),-1),0),1,0) as PYMTD,
+   if(InQuarterToDate(TempDate,today(),0),1,0) as QTD,
+     if(InQuarterToDate(TempDate,AddYears(today(),-1),0),1,0) as PYQTD,
+      if(InYearToDate(TempDate,today(),0),1,0) as YTD,
+        if(InYearToDate(TempDate,today(),-1),1,0) as PYTD,
+         ///////Flags Financial calend
+         if(InYearToDate(TempDate,today(),0,$(vFinYear_Month)),1,0) as FYTD,
+          if(InYearToDate(TempDate,AddYears(today(),-1),0,$(vFinYear_Month)),1,0) as PFYTD,
+          if(InQuarterToDate(TempDate,today(),0,$(vFinYear_Month)),1,0) as FQTD,
+     if(InQuarterToDate(TempDate,AddYears(today(),-1),0,$(vFinYear_Month)),1,0) as PYfQTD,
+;
+
+//=== Generate a temp table of dates === 
+LOAD 
+ date(mindate + IterNo()) AS TempDate
+ ,maxdate // Used in InYearToDate() above, but not kept 
+WHILE mindate + IterNo() <= maxdate;
+
+//=== Get min/max dates from Field ===/
+LOAD
+ min(FieldValue('OrderDate', recno()))-1 as mindate,
+ max(FieldValue('OrderDate', recno())) as maxdate
+AUTOGENERATE FieldValueCount('OrderDate');
+
+
+
+
