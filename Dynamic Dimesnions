@@ -1,0 +1,1 @@
+=SubStringCount(Concat(%Mearsures, '|'), 'Sales') and if(IsNull( GetFieldSelections(%Mearsures)>0),0,1)
