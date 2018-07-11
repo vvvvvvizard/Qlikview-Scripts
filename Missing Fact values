@@ -1,0 +1,1 @@
+Sum({1<Date={">=$(=min(_KEY_Date))<=$(=max(_KEY_Date))"}>}1)
