@@ -1,0 +1,1 @@
+  Only(Aggr(RangeSum(Above(total Sum(Amount) + Sum({1} 0),0,12)), YearMonth))
