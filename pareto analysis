@@ -1,0 +1,6 @@
+=Aggr(
+    If(Rangesum(Above(Sum({1} Sales)/Sum({1} total Sales),1,RowNo()))<0.8, 'A',
+        If(Rangesum(Above(Sum({1} Sales)/Sum({1} total Sales),1,RowNo()))<0.9, 'B',
+            'C')),
+    (Product,(=Sum({1} Sales),Desc))
+    )
