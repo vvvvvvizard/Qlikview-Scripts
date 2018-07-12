@@ -3,5 +3,5 @@ If(RangeSum(Above(Sum([Net Sales]),1,RowNo())) / Sum(total [Net Sales]) <= 0.8, 
 If(RangeSum(Above(Sum([Net Sales]),1,RowNo())) / Sum(total [Net Sales]) <= 0.9, Yellow(),
 Red()))
 
-//Expression
+//Expression and sort by expression Desc
 Sum([Net Sales]
