@@ -15,7 +15,7 @@ LOAD * INLINE [
 ];
 
 
-
+//Cartesion join to get every product and every customer pair
 
 Temp:
 
@@ -33,7 +33,7 @@ LOAD Distinct product
 Resident Table;
 
 
-
+//Flag actual products bought
 
 Left Join (Temp)
 
@@ -52,7 +52,7 @@ LOAD product,
 
  If(Flag = 1, customer) as customer,
 
- If(Len(Trim(Flag)) = 0, customer) as not_customer
+ If(Len(Trim(Flag)) = 0, customer) as not_customer //Without flag are products not bought
 
 Resident Temp;
 
