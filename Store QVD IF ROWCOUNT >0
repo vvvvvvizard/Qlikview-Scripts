@@ -1,0 +1,13 @@
+set zTableName='FACT';
+
+If NoOfRows('$(zTableName)')>0 then
+       
+       STORE [$(zTableName)] INTO [$(vPath)\2_Transform\SIEBEL_VIEW_CAMPAIGN_LEAD_PRD_Incremental.qvd](qvd);
+       
+      // DROP Table [$(zTableName)];
+
+ELSE
+
+       TRACE ### /!\ WARNING: $(zTableName) has zero rows. Store cancelled. ###;
+       
+ENDIF 
