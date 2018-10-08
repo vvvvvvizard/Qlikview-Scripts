@@ -1,0 +1,7 @@
+=if(
+Rank(Sum(Flag_LEADS_COMPLETED))=1,Blue(),
+if(
+Sum(Flag_LEADS_COMPLETED)>$(yr),////////$(yr)is an average value calculated 
+$(vColor_Chart_Data_3)
+,LightGray()
+))
