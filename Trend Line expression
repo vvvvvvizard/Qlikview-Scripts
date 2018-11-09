@@ -1,0 +1,1 @@
+=linest_m(total aggr($(eLeads_Completed),Month_Completed), Month_Completed)*Month_Completed + linest_b(total aggr($(eLeads_Completed),Month_Completed),Month_Completed)
