@@ -1,0 +1,20 @@
+1. Use as  %Key_Business_Skill , final name 1st
+2. Use other field from main table 
+
+Business_Skills:
+LOAD ACDNo & '|'&Skill as %Key_Business_Skill,
+	ACDNo & '|'&Skill as Skills_in_Excel_Sheet,
+	//ACDNo, 
+     Skill, 
+     AvayaName, 
+     BusinessUnit, 
+     BusinessSkillName
+FROM
+[$(vPathAFS)\1_Extract\SPE_WCCA_SkillsMap_SkillName.qvd]
+(qvd);
+
+
+Unmapped:
+LOAD Distinct %Key_Business_Skill as Unmapped
+Resident Avaya_Daily_Fact
+where not Exists(Skills_in_Excel_Sheet, %Key_Business_Skill);
