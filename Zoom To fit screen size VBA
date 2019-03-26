@@ -1,0 +1,15 @@
+Trigger the below macro in
+
+Sub FitZoomToWindow 
+
+ActiveDocument.GetApplication.WaitForIdle 
+
+ActiveDocument.ActiveSheet.FItZoomToWindow 
+
+End Sub 
+
+Settings -> Document Properties -> Triggers -> On open -> Add Action -> Add -> External -> Run Macro -> Give Macro Name (FitZoomToWindow)
+
+Before that paste the above macro code in the Edit Module window (Ctrl + M).
+
+For some other sample macros check the link below
